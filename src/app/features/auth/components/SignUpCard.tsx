@@ -10,13 +10,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { SignFlow } from "../signFlow";
+import { authCredentials, SignFlow } from "../signFlow";
+import { useState } from "react";
 
 interface signType {
     setSign: (state: SignFlow) => void
 };
 
 export const SignUpCard = ({ setSign }: signType) => {
+
+    const [credentials, setCredentials] = useState<authCredentials>({
+        email: "", 
+        password: "", 
+        confirmPassword: ""
+    });
+
+    const setValue = (e: React.ChangeEvent<HTMLInputElement>) => setCredentials({...credentials, [e.target.name]: [e.target.value]});
+    
     return (
         <Card className="h-full w-full p-8">
             <CardHeader className="px-0 pt-0">
@@ -28,16 +38,27 @@ export const SignUpCard = ({ setSign }: signType) => {
                     <Input
                         placeholder="Email"
                         type="email"
-                        value=""
-                        onChange={() => {}}
+                        name="email"
+                        value={credentials.email}
+                        onChange={(e) => setValue(e)}
                         required
                         disabled={false}
                     />
                     <Input
                         placeholder="Password"
                         type="password"
-                        value=""
-                        onChange={() => {}}
+                        name="password"
+                        value={credentials.password}
+                        onChange={(e) => setValue(e)}
+                        required
+                        disabled={false}
+                    />
+                    <Input
+                        placeholder="Confirm Password"
+                        type="password"
+                        name="confirmPassword"
+                        value={credentials.confirmPassword}
+                        onChange={(e) => setValue(e)}
                         required
                         disabled={false}
                     />
