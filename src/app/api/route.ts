@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
-import configureDB from '../../db/index';
 
 export const GET = async () => {
     try {
-        await configureDB();
         return NextResponse.json({
             message: "Healthy..."
         }, {

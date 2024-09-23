@@ -1,15 +1,3 @@
-# SLACK Clone
-# Install `bun` runtime
-## Local setup
-  ### Add `env` variables
-```
-DB_PASSWORD=mysql
-DB_HOST=localhost
-DB_USER=root
-DB_DB=slack
-```
-### At `src/db/config` create `config.json` file and add the commands
-```
 {
   "development": {
     "username": "root",
@@ -33,18 +21,3 @@ DB_DB=slack
     "dialect": "mysql"
   }
 }
-```
-
-### Install Dependencies
-```
-bun i
-```
-### Create Database
-```
-bunx sequelize db:create
-```
-### Add migrations
-```
-bunx sequelize db:migrate
-```
-# Docker setup
