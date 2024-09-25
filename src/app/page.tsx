@@ -1,7 +1,5 @@
-import { AuthScreen } from "./features/auth/AuthScreen";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <AuthScreen/>
-  );
+export default async function Home() {
+  redirect("/dashboard");
 }
