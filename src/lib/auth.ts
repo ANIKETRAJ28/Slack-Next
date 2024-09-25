@@ -1,4 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
+import GitHubProvider from "next-auth/providers/github";
 
 export const NEXT_AUTH = {
     providers: [
@@ -15,6 +16,10 @@ export const NEXT_AUTH = {
                     password: credentials.password
                 }
             },
+        }),
+        GitHubProvider({
+            clientId: process.env.GITHUB_ID || "",
+            clientSecret: process.env.GITHUB_SECRET || ""
         })
     ],
     secret: process.env.NEXTAUTH_SECRET || "secret",
