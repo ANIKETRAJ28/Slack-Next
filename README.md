@@ -3,14 +3,13 @@
 ## Local setup
   ### Add `env` variables
 ```
-DB_PASSWORD=mysql
-DB_HOST=localhost
-DB_USER=root
-DB_DB=slack
-GITHUB_ID=<your_github_id>
-GITHUB_SECRET=<your_github_secret>
+DB_SYNC=true
+NEXTAUTH_URL=http://localhost:3000/
+NEXTAUTH_SECRET=<next_secret>
+GITHUB_ID=<github_id>
+GITHUB_SECRET=<github_secret>
 ```
-### At `src/db/config` create `config.json` file and add the commands
+### At `src/db/config` create `config.js` file and add the commands
 ```
 {
   "development": {
@@ -41,6 +40,9 @@ GITHUB_SECRET=<your_github_secret>
 ```
 bun i
 ```
+
+## At `src/db` run command
+
 ### Create Database
 ```
 bunx sequelize db:create
