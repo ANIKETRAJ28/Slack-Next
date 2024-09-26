@@ -20,8 +20,8 @@ export const AuthCard = ({ page }: { page: SignFlow }) => {
     const router = useRouter();
 
     const [credentials, setCredentials] = useState<authCredentials>({
+        userName: "",
         name: "",
-        email: "",
         password: "",
         page: page
     });
@@ -40,7 +40,7 @@ export const AuthCard = ({ page }: { page: SignFlow }) => {
             <CardContent className="space-y-5 px-0 pb-0">
                 <form className="space-y-2.5">
                     {page === "signup" && <Input
-                        placeholder="Nane"
+                        placeholder="name"
                         type="text"
                         name = "name"
                         value={credentials.name}
@@ -49,10 +49,10 @@ export const AuthCard = ({ page }: { page: SignFlow }) => {
                         disabled={false}
                     />}
                     <Input
-                        placeholder="Email"
-                        type="email"
-                        name = "email"
-                        value={credentials.email}
+                        placeholder="Usernane"
+                        type="text"
+                        name = "userName"
+                        value={credentials.userName}
                         onChange={(e) => setValue(e)}
                         required
                         disabled={false}
@@ -73,19 +73,17 @@ export const AuthCard = ({ page }: { page: SignFlow }) => {
                         disabled={false}
                         onClick={ async (e) => {
                             e.preventDefault();
-                            if(page === "signin" && credentials.email === "" && credentials.password === ""
-                                || page === "signup" && credentials.name === "" && credentials.email === "" && credentials.password === ""
-                            ) return;
+                            if(credentials.userName === "" && credentials.password === "") return;
+                            if(page === "signup" && credentials.name === "") return;
                             const res = await signIn("credentials", {
                                 name: credentials.name,
+                                userName: credentials.userName,
                                 password: credentials.password,
-                                email: credentials.password,
                                 provider: "Credentials",
                                 page: page,
-                                // redirect: true,
-                                // callbackUrl: "http://localhost:3000"
+                                redirect: true,
+                                callbackUrl: "http://localhost:3000"
                             });
-                            console.log(res);
                             return res;
                         }}
                     >

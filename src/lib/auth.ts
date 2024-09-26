@@ -5,20 +5,14 @@ import GitHubProvider from "next-auth/providers/github";
 export const NEXT_AUTH = {
     providers: [
         CredentialsProvider({
-            name: "Email",
-            credentials: {
-            name: { label: "Name", type: "text", placeholder: "abc" },
-            email: { label: "Email", type: "email", placeholder: "abc@def.com" },
-            password: { label: "Password", type: "password" }
-            },
+            name: "Credentials",
             async authorize(credentials: any) {
                 const page = credentials.page;
                 if(page === "signin") {
                     try {
                         const user = await User.findOne({
                             where: {
-                                email: credentials.email,
-                                provider: "Credentials"
+                                userName: credentials.userName,
                             }
                         });
                         if(!user) throw new Error("User does not exists");
@@ -28,21 +22,18 @@ export const NEXT_AUTH = {
                         throw error;
                     }
                 } else {
-                    return credentials;
                     try {
                         const user = await User.findOne({
                             where: {
-                                email: credentials.email,
-                                provider: "Credentials"
+                                userName: credentials.userName,
                             }
                         });
-                        console.log(`user is... ${user}`);
                         if(user) throw new Error("User already exists");
-                        return user;
+                        // return user;
                         const newUser = await User.create({
+                            userName: credentials.userName,
                             name: credentials.name,
                             password: credentials.password,
-                            email: credentials.email,
                             provider: "Credentials"
                         });
                         return newUser;
@@ -54,13 +45,26 @@ export const NEXT_AUTH = {
         }),
         GitHubProvider({
             clientId: process.env.GITHUB_ID || "",
-            clientSecret: process.env.GITHUB_SECRET || ""
+            clientSecret: process.env.GITHUB_SECRET || "",
         })
     ],
     secret: process.env.NEXTAUTH_SECRET || "secret",
     callbacks: {
+        signIn: async ({ account, profile }: any) => {
+            if(account.provider === "github") {
+                const user = await User.findOne({
+                    where: {userName: profile.login}
+                });
+                if(user) return user;
+                await User.create({
+                    name: profile.name,
+                    userName: profile.login,
+                    provider: "Github"
+                });
+            }
+            return true;
+        },
         session: ({ session, token }: any) => {
-            // session.user.id = token.userId;
             if(session && session.user) {
                 session.user.id = token.sub;
             }
