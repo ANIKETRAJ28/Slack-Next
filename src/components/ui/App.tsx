@@ -1,5 +1,6 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react"
+import { UserButton } from "../user/UserButton";
 
 export const Appbar = () => {
   const session = useSession();
@@ -7,7 +8,6 @@ export const Appbar = () => {
       <div>
         {JSON.stringify(session)}
       </div>
-    <button onClick={() => signIn()}>Signin</button>
-    <button onClick={() => signOut()}>Sign out</button>
+    <UserButton image={session.data?.user?.image || ""} name={session.data?.user?.name || ""} status={session.status}/>
   </div>
 }
