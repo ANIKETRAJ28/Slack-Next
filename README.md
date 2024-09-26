@@ -7,6 +7,8 @@ DB_PASSWORD=mysql
 DB_HOST=localhost
 DB_USER=root
 DB_DB=slack
+GITHUB_ID=<your_github_id>
+GITHUB_SECRET=<your_github_secret>
 ```
 ### At `src/db/config` create `config.json` file and add the commands
 ```
