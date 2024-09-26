@@ -2,20 +2,18 @@ import { DataTypes } from "sequelize";
 import sequelize from "../index";
 
 const User = sequelize.define("User", {
-  firstName: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  lastName: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: false
   },
   password: {
     type: DataTypes.STRING,
+  },
+  provider: {
+    type: DataTypes.ENUM("Credentials", "Github"),
     allowNull: false
   }
 });
